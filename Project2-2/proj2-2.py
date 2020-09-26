@@ -6,6 +6,7 @@ Submitted by: Stella Beemer
 GU Username: sbeemer2
 File name: proj2-2.py
 Project uses Zipf's law the analyze the frequency of words in a corpus
+All four files look equally zipfian as they visually have a near identical slope
 To Execute: python3 proj2-1.py
 '''
 
