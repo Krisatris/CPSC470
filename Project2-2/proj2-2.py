@@ -11,8 +11,20 @@ To Execute: python3 proj2-1.py
 
 from nltk.tokenize import word_tokenize
 import matplotlib.pyplot as plt
+import numpy as np
 import sys
-import porter
+import string
+from porter import PorterStemmer
+
+'''
+pre:  dictionary is a sorted list of words in a text and the frequency they occur in
+post: plots the graph of how often the words occur
+'''
+def plot(dictionary):
+    x = range(1, len(dictionary) + 1)
+    y = np.array(list(dictionary.values()))
+    plt.plot(np.log(x), np.log(y))
+    plt.show()
 
 '''
 pre:  wordList is an ordered list of all the words in user-inputted file
@@ -26,8 +38,9 @@ def count(wordList):
             dictionary[w] = dictionary[w] + 1
         else:
             dictionary[w] = 1
-    sortedDictionary = sorted(dictionary.items(), key=lambda x: x[1])
-    return dictionary
+    sortedDictionary = {j: i for j, i in sorted(dictionary.items(),
+                                                key=lambda x: x[1], reverse=True)}
+    return sortedDictionary
 
 '''
 pre:  text is a string containing all of the text in a user-entered file
@@ -39,7 +52,7 @@ def customToken(text):
     nonAscii = ''.join(list(dict.values()))
 
     wordList = text.split()
-    remove = string.digits + string.puncuation + nonAscii
+    remove = string.digits + string.punctuation + nonAscii
     table = str.maketrans('', '', remove)
     wordList = [w.translate(table) for w in wordList]
     wordList = [word for word in wordList if len(word) > 0]
@@ -53,7 +66,7 @@ pre:  text is a string containing all of the text in a user-entered file
 post: returns a list of all the words in text split using the Porter normalizer
 '''
 def porter(text):
-    p = porter.PorterStemmer()
+    p = PorterStemmer()
     output = ''
     word = ''
     line = text.split('\n')
@@ -94,17 +107,18 @@ def main():
     tokenizer = sys.argv[2]
 
     text = getData(fileName)
-    wordList = []
 
-    if (tokenizer == 1):
+    if (tokenizer == '1'):
         wordList = spaceToken(text)
-    elif(tokenizer == 2):
+    elif(tokenizer == '2'):
         wordList = word_tokenize(text)
-    elif(tokenizer == 3):
+    elif(tokenizer == '3'):
         wordList = porter(text)
-    elif(tokenizer == 4):
+    elif(tokenizer == '4'):
         wordList = customToken(text)
 
     dictionary = count(wordList)
+
+    plot(dictionary)
 
 main()
