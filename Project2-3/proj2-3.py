@@ -7,13 +7,14 @@ GU Username: sbeemer2
 File name: proj2-3.py
 Project uses Zipf's law the analyze the frequency of words in a spoken-word corpus
 All four files look equally zipfian as they visually have a near identical slope
-To Execute: python3 proj2-1.py
+To Execute: python3 proj2-3.py directory tokenizerNum
 '''
 
 from nltk.tokenize import word_tokenize
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+import os
 import string
 from porter import PorterStemmer
 
@@ -92,10 +93,18 @@ def spaceToken(text):
 pre:  fname is the file name of a textfile entered by the user
 post: all of the text in the user entered file is imported into a string
 '''
-def getData(fname):
-    fin = open(fname, 'r')
-    text = fin.read()
-    fin.close()
+def getData(dName):
+    directoryList = os.listdir(dName)
+    text = ""
+    os.chdir(dName)
+    for file in directoryList:
+        fin = open(file, 'r')
+        text = text + " " + fin.read()
+        fin.close()
+    os.chdir("..")
+    fout = open("BSC.txt", 'w')
+    fout.write(text)
+    fout.close()
     return text
 
 '''
@@ -104,10 +113,10 @@ post: calls the functions to tokenize/normalize and analyze program
 '''
 def main():
 
-    fileName = sys.argv[1]
+    directoryName = sys.argv[1]
     tokenizer = sys.argv[2]
 
-    text = getData(fileName)
+    text = getData(directoryName)
 
     if (tokenizer == '1'):
         wordList = spaceToken(text)
@@ -121,5 +130,6 @@ def main():
     dictionary = count(wordList)
 
     plot(dictionary)
+
 
 main()
