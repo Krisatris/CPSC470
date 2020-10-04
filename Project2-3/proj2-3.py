@@ -6,7 +6,9 @@ Submitted by: Stella Beemer
 GU Username: sbeemer2
 File name: proj2-3.py
 Project uses Zipf's law the analyze the frequency of words in a spoken-word corpus
-All four files look equally zipfian as they visually have a near identical slope
+All four files look equally zipfian as they visually have a near identical slope.
+Compared to the last assignment, I do not see a visible difference in how Zipfian
+the written word corpora is as comapred to the spoken word corpora.
 To Execute: python3 proj2-3.py directory tokenizerNum
 '''
 
